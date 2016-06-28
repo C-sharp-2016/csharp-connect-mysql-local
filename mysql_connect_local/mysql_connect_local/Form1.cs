@@ -42,15 +42,14 @@ namespace mysql_connect_local
 
                 Console.WriteLine("inserted to database csharp_testing1.users");
 
-
-
-
+                 
                 MySqlDataAdapter mda = new MySqlDataAdapter("Select * from  csharp_testing1.users order by id desc", mcon);
                 DataSet ds = new DataSet();
 
                 mda.Fill(ds, "users");
 
                 dataGridView1.DataSource = ds.Tables["users"];
+
                  
                 mcon.Close();
 
@@ -103,8 +102,10 @@ namespace mysql_connect_local
 
                 MyConn2.Open();  
                 MyReader2 = MyCommand2.ExecuteReader();  
-                MessageBox.Show("Data Updated");  
-          
+                MessageBox.Show("Data Updated");
+
+                show_result();
+
                 MyConn2.Close();//Connection closed here  
             }  
             catch (Exception ex)  
@@ -131,11 +132,40 @@ namespace mysql_connect_local
                 MyReader2 = MyCommand2.ExecuteReader();
                 MessageBox.Show("All Data Deleted");
 
+                show_result();
+
                 MyConn2.Close();//Connection closed here  
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+
+
+        private void show_result()
+        {
+            try
+            {
+                MySqlConnection mcon = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
+
+                MySqlDataAdapter mda = new MySqlDataAdapter("Select * from  csharp_testing1.users", mcon);
+
+                mcon.Open();
+
+                DataSet ds = new DataSet();
+
+                mda.Fill(ds, "users");
+
+                dataGridView1.DataSource = ds.Tables["users"];
+
+                mcon.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }
