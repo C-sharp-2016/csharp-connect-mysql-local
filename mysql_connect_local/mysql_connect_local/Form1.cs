@@ -34,15 +34,25 @@ namespace mysql_connect_local
                 mcon.Open();
                  
                 MySqlCommand comm = mcon.CreateCommand();
-
-
-
+                 
                 comm.CommandText = "INSERT INTO csharp_testing1.users(username, pass) VALUES(?username, ?pass) ";
                 comm.Parameters.Add("?username", username.Text);
                 comm.Parameters.Add("?pass", password.Text);
                 comm.ExecuteNonQuery();
 
                 Console.WriteLine("inserted to database csharp_testing1.users");
+
+
+
+
+                MySqlDataAdapter mda = new MySqlDataAdapter("Select * from  csharp_testing1.users order by id desc", mcon);
+                DataSet ds = new DataSet();
+
+                mda.Fill(ds, "users");
+
+                dataGridView1.DataSource = ds.Tables["users"];
+
+
 
                 mcon.Close();
 
