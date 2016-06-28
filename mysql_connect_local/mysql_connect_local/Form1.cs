@@ -20,6 +20,39 @@ namespace mysql_connect_local
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+        }
+ 
+
+        private void insert_click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                MySqlConnection mcon = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
+                 
+                mcon.Open();
+                 
+               MySqlCommand comm = mcon.CreateCommand();
+                comm.CommandText = "INSERT INTO csharp_testing1.users(username, pass) VALUES(?username, ?pass) ";
+                comm.Parameters.Add("?username", "myusername");
+                comm.Parameters.Add("?pass", "mypass");
+                comm.ExecuteNonQuery();
+
+                Console.WriteLine("inserted to database csharp_testing1.users");
+
+                mcon.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void query_click(object sender, EventArgs e)
+        {
+
             try
             {
                 MySqlConnection mcon = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
@@ -34,7 +67,7 @@ namespace mysql_connect_local
 
                 dataGridView1.DataSource = ds.Tables["users"];
 
-                mcon.Close(); 
+                mcon.Close();
 
             }
             catch (Exception ex)
